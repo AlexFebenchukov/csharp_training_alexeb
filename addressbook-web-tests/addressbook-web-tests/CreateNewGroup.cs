@@ -10,7 +10,7 @@ using OpenQA.Selenium.Support.UI;
 namespace SeleniumTests
 {
     [TestFixture]
-    public class Untitled
+    public class AddressBookTest
     {
         private IWebDriver driver;
         private StringBuilder verificationErrors;
@@ -43,7 +43,7 @@ namespace SeleniumTests
         }
 
         [Test]
-        public void TheUntitledTest()
+        public void CreateNewGroup()
         {
             driver.Navigate().GoToUrl(baseURL + "addressbook/");
             driver.FindElement(By.Name("user")).Clear();
