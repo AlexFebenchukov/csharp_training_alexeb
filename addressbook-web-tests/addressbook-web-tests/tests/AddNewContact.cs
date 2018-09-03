@@ -10,7 +10,7 @@ using OpenQA.Selenium.Support.UI;
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class ContactsTests
+    public class ContactsTests : TestBase
     {
         private IWebDriver driver;
         private StringBuilder verificationErrors;
@@ -24,7 +24,7 @@ namespace WebAddressBookTests
             options.BrowserExecutableLocation = @"C:\Program Files\FireFoxForTests\firefox.exe";
             options.UseLegacyImplementation = true;
             driver = new FirefoxDriver(options);
-            baseURL = "http://localhost:8080/";
+            baseURL = "http://localhost:8080";
             verificationErrors = new StringBuilder();
         }
 

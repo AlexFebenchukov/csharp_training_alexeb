@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace WebAddressBookTests
 {
-    class ContactData
+    public class ContactData
     {
-        private string name = "";
+        private string name;
         private string sureName = "";
         private string lastName = "";
 
