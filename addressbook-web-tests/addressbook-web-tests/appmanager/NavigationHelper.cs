@@ -29,9 +29,13 @@ namespace WebAddressBookTests
             driver.FindElement(By.LinkText("groups")).Click();
         }
 
-        public void GoToContactPage()
+        public void GoToEditContactPage()
         {
             driver.Navigate().GoToUrl(baseURL + "addressbook/edit.php");
+        }
+        public void GoToContactsListPage()
+        {
+            driver.Navigate().GoToUrl(baseURL + "addressbook/");
         }
     }
 }

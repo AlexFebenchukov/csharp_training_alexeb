@@ -14,9 +14,9 @@ namespace WebAddressBookTests
         public void AddNewContact()
         {
 
-            ContactData contact = new ContactData("Alexandr");
-            contact.SureName = "Valerievich";
-            contact.LastName = "Febenchukov";
+            ContactData contact = new ContactData("AAAA");
+            contact.SureName = "VVVV";
+            contact.LastName = "FFFFF";
 
             app.Contacts.CreationNewContact(contact);
         }
