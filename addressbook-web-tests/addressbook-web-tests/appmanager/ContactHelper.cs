@@ -48,10 +48,10 @@ namespace WebAddressBookTests
             return this;
         }
 
-        public ContactHelper DeleteContact(int number)
+        public ContactHelper DeleteContact(int rowNumber)
         {
             manager.Navigator.GoToContactsListPage();
-            SelectContact(number);
+            SelectContact(rowNumber + 1);
             Delete();
             return this;
         }
@@ -63,10 +63,10 @@ namespace WebAddressBookTests
             return this;
         }
 
-        public ContactHelper EditContact(int number, ContactData contact)
+        public ContactHelper EditContact(int rowNumber, ContactData contact)
         {
             manager.Navigator.GoToContactsListPage();
-            StartEditContact(number);
+            StartEditContact(rowNumber + 1);
             InfillNewContactData(contact);
             SubmitContactCreation();
             manager.Navigator.GoToContactsListPage();
@@ -84,9 +84,9 @@ namespace WebAddressBookTests
             return this;
         }
 
-        private ContactHelper StartEditContact(int number)
+        private ContactHelper StartEditContact(int rowNumber)
         {
-            driver.FindElement(By.XPath("(//a[@href='edit.php?id="+ number +"'])")).Click();
+            driver.FindElement(By.XPath("(//table//tr[" + rowNumber + "]//td[8]//a)")).Click();
             return this;
         }
 
@@ -104,9 +104,9 @@ namespace WebAddressBookTests
             return this;
         }
 
-        private ContactHelper SelectContact(int number)
+        private ContactHelper SelectContact(int rowNumber)
         {
-            driver.FindElement(By.XPath("(//input[@id="+ number +"])")).Click();
+            driver.FindElement(By.XPath("//table//tr["+ rowNumber +"]//input")).Click();
             return this;
         }
 
