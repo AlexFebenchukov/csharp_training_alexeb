@@ -75,12 +75,9 @@ namespace WebAddressBookTests
 
         private ContactHelper InfillNewContactData(ContactData contact)
         {
-            driver.FindElement(By.Name("firstname")).Clear();
-            driver.FindElement(By.Name("firstname")).SendKeys(contact.Name);
-            driver.FindElement(By.Name("middlename")).Clear();
-            driver.FindElement(By.Name("middlename")).SendKeys(contact.SureName);
-            driver.FindElement(By.Name("lastname")).Clear();
-            driver.FindElement(By.Name("lastname")).SendKeys(contact.LastName);
+            Type(By.Name("firstname"), contact.Name);
+            Type(By.Name("middlename"), contact.SureName);
+            Type(By.Name("lastname"), contact.LastName);
             return this;
         }
 

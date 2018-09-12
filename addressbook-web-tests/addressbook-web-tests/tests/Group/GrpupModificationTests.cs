@@ -8,14 +8,14 @@ using NUnit.Framework;
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class GrpupModificationTests : TestBase
+    public class GrpupModificationTests : AuthTestBase
     {
         [Test]
         public void GroupModificationTest()
         {
             GroupData newData = new GroupData("zzz");
-            newData.Header = "ttt";
-            newData.Footer = "mmmm";
+            newData.Header = null;
+            newData.Footer = null;
 
             app.Groups.Modify(1, newData);
 
