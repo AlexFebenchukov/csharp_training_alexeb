@@ -103,7 +103,15 @@ namespace WebAddressBookTests
 
         private ContactHelper SelectContact(int rowNumber)
         {
-            driver.FindElement(By.XPath("//table//tr["+ rowNumber +"]//input")).Click();
+            if (IsElementPresent(By.XPath("//table//tr[" + rowNumber + "]//input")))
+            {
+                driver.FindElement(By.XPath("//table//tr[" + rowNumber + "]//input")).Click();
+            }
+            else
+            {
+                ContactsTests newContact = new ContactsTests();
+                newContact.AddNewContact();
+            }
             return this;
         }
 
