@@ -21,7 +21,7 @@ namespace WebAddressBookTests
             manager.Navigator.GoToEditContactPage();
             FillContactForm(contact);
             SubmitContactCreation();
-            ReturnToContactsPage();
+            GoToContactListPage();
             return this;
         }
 
@@ -42,9 +42,15 @@ namespace WebAddressBookTests
             return this;
         }
 
-        public ContactHelper ReturnToContactsPage()
+        public ContactHelper GoToAddContactPage()
         {
             driver.FindElement(By.LinkText("add new")).Click();
+            return this;
+        }
+
+        public ContactHelper GoToContactListPage()
+        {
+            driver.FindElement(By.LinkText("home")).Click();
             return this;
         }
 
@@ -63,16 +69,6 @@ namespace WebAddressBookTests
             return this;
         }
 
-        public ContactHelper EditContact(int rowNumber, ContactData contact)
-        {
-            manager.Navigator.GoToContactsListPage();
-            StartEditContact(rowNumber + 1);
-            InfillNewContactData(contact);
-            SubmitContactCreation();
-            manager.Navigator.GoToContactsListPage();
-            return this;
-        }
-
         private ContactHelper InfillNewContactData(ContactData contact)
         {
             Type(By.Name("firstname"), contact.Name);
@@ -83,14 +79,47 @@ namespace WebAddressBookTests
 
         private ContactHelper StartEditContact(int rowNumber)
         {
-            driver.FindElement(By.XPath("(//table//tr[" + rowNumber + "]//td[8]//a)")).Click();
+            if (IsElementPresent(By.XPath("(//table//tr[" + rowNumber + "]//td[8]//a)")))
+            {
+                driver.FindElement(By.XPath("(//table//tr[" + rowNumber + "]//td[8]//a)")).Click();
+            }
+            else
+            {
+                ContactData contact = new ContactData("AAAA");
+                contact.SureName = "VVVV";
+                contact.LastName = "FFFFF";
+                CreationNewContact(contact);
+                driver.FindElement(By.XPath("(//table//tr[" + rowNumber + "]//td[8]//a)")).Click();
+            }
+
             return this;
         }
 
+        public ContactHelper EditContact(int rowNumber, ContactData contact)
+        {
+            manager.Navigator.GoToContactsListPage();
+
+            StartEditContact(rowNumber + 1);
+            InfillNewContactData(contact);
+            SubmitContactCreation();
+            manager.Navigator.GoToContactsListPage();
+            return this;
+        }
 
         private ContactHelper SelectAllContacts()
         {
-            driver.FindElement(By.XPath("(//input[@id='MassCB'])")).Click();
+            if (IsElementPresent(By.CssSelector("input[name = 'selected[]']")))
+            {
+                driver.FindElement(By.XPath("(//input[@id='MassCB'])")).Click();
+            }
+            else
+            {
+                ContactData contact = new ContactData("AAAA");
+                contact.SureName = "VVVV";
+                contact.LastName = "FFFFF";
+                CreationNewContact(contact);
+                driver.FindElement(By.XPath("(//input[@id='MassCB'])")).Click();
+            }
             return this;
         }
 
@@ -109,8 +138,11 @@ namespace WebAddressBookTests
             }
             else
             {
-                ContactsTests newContact = new ContactsTests();
-                newContact.AddNewContact();
+                ContactData contact = new ContactData("AAAA");
+                contact.SureName = "VVVV";
+                contact.LastName = "FFFFF";
+                CreationNewContact(contact);
+                driver.FindElement(By.XPath("//table//tr[" + rowNumber + "]//input")).Click();
             }
             return this;
         }

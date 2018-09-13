@@ -20,7 +20,6 @@ namespace WebAddressBookTests
         public GroupHelper Create(GroupData group)
         {
             manager.Navigator.GoToGroupPage();
-
             InitNewGroupCreation();
             FillGroupForm(group);
             SubmitGroupCreation();
@@ -60,7 +59,15 @@ namespace WebAddressBookTests
 
         public GroupHelper SelectGroup(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            if (IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + index + "]")))
+            {
+                driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            }
+            else
+            {
+                CreateNewGroups n = new CreateNewGroups();
+                n.CreateNewGroup();
+            }
             return this;
         }
         public GroupHelper SubmitGroupCreation()
