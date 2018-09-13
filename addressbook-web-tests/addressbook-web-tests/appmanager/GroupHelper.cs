@@ -28,10 +28,19 @@ namespace WebAddressBookTests
         }
 
 
-        public GroupHelper Modify(int i, GroupData newData)
+        public GroupHelper Modify(int index, GroupData newData)
         {
             manager.Navigator.GoToGroupPage();
-            SelectGroup(i);
+            if (IsExistGroup(index))
+            {
+                SelectGroup(index);
+            }
+            else
+            {
+                CreateNewGroups n = new CreateNewGroups();
+                n.CreateNewGroup();
+                SelectGroup(index);
+            }
             InitGroupModification();
             FillGroupForm(newData);
             SubmitGroupModification();
@@ -40,10 +49,19 @@ namespace WebAddressBookTests
         }
 
 
-        public GroupHelper Remove(int i)
+        public GroupHelper Remove(int index)
         {
             manager.Navigator.GoToGroupPage();
-            SelectGroup(i);
+            if (IsExistGroup(index))
+            {
+                SelectGroup(index);
+            }
+            else
+            {
+                CreateNewGroups n = new CreateNewGroups();
+                n.CreateNewGroup();
+                SelectGroup(index);
+            }
             RemoveGroup();
             ReturnToGroupsPage();
             return this;
@@ -55,21 +73,14 @@ namespace WebAddressBookTests
             return this;
         }
 
-       
-
         public GroupHelper SelectGroup(int index)
         {
-            if (IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + index + "]")))
-            {
-                driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
-            }
-            else
-            {
-                CreateNewGroups n = new CreateNewGroups();
-                n.CreateNewGroup();
-            }
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+
+
             return this;
         }
+
         public GroupHelper SubmitGroupCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
@@ -108,5 +119,9 @@ namespace WebAddressBookTests
             return this;
         }
 
+        public bool IsExistGroup(int index)
+        {
+            return IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + index + "]"));
+        }
     }
 }

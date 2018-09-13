@@ -56,15 +56,34 @@ namespace WebAddressBookTests
 
         public ContactHelper DeleteContact(int rowNumber)
         {
+            rowNumber++;
             manager.Navigator.GoToContactsListPage();
-            SelectContact(rowNumber + 1);
+            if (IsExistContact(rowNumber))
+            {
+                SelectContact(rowNumber);
+            }
+            else
+            {
+                ContactsTests cont = new ContactsTests();
+                cont.AddNewContact();
+                driver.FindElement(By.XPath("//table//tr[" + rowNumber + "]//input")).Click();
+            }
             Delete();
             return this;
         }
         public ContactHelper DeleteAllContacts()
         {
             manager.Navigator.GoToContactsListPage();
-            SelectAllContacts();
+            if (IsExistContact(2))
+            {
+                SelectAllContacts();
+            }
+            else
+            {
+                ContactsTests cont = new ContactsTests();
+                cont.AddNewContact();
+                SelectAllContacts();
+            }
             Delete();
             return this;
         }
@@ -89,7 +108,6 @@ namespace WebAddressBookTests
                 contact.SureName = "VVVV";
                 contact.LastName = "FFFFF";
                 CreationNewContact(contact);
-                driver.FindElement(By.XPath("(//table//tr[" + rowNumber + "]//td[8]//a)")).Click();
             }
 
             return this;
@@ -132,21 +150,14 @@ namespace WebAddressBookTests
 
         private ContactHelper SelectContact(int rowNumber)
         {
-            if (IsElementPresent(By.XPath("//table//tr[" + rowNumber + "]//input")))
-            {
-                driver.FindElement(By.XPath("//table//tr[" + rowNumber + "]//input")).Click();
-            }
-            else
-            {
-                ContactData contact = new ContactData("AAAA");
-                contact.SureName = "VVVV";
-                contact.LastName = "FFFFF";
-                CreationNewContact(contact);
-                driver.FindElement(By.XPath("//table//tr[" + rowNumber + "]//input")).Click();
-            }
+            driver.FindElement(By.XPath("//table//tr[" + rowNumber + "]//input")).Click();
             return this;
         }
 
-        
+        public bool IsExistContact(int rowNumber)
+        {
+            rowNumber++;
+            return IsElementPresent(By.XPath("//table//tr[" + rowNumber + "]//input"));
+        }
     }
 }
