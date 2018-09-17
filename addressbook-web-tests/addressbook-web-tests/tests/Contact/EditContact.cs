@@ -16,7 +16,17 @@ namespace WebAddressBookTests
             contact.SureName = "aaCCCC";
             contact.LastName = "aaDDDD";
 
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
+
             app.Contacts.EditContact(1, contact);
+            oldContacts.RemoveAt(0);
+            oldContacts.Add(contact);
+            oldContacts.Sort();
+
+            List<ContactData> newContacts = app.Contacts.GetContactList();
+            
+            newContacts.Sort();
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }

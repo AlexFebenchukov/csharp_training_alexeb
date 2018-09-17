@@ -30,6 +30,7 @@ namespace WebAddressBookTests
 
         public GroupHelper Modify(int index, GroupData newData)
         {
+            index++;
             manager.Navigator.GoToGroupPage();
             if (IsExistGroup(index))
             {
@@ -51,6 +52,7 @@ namespace WebAddressBookTests
 
         public GroupHelper Remove(int index)
         {
+            index++;
             manager.Navigator.GoToGroupPage();
             if (IsExistGroup(index))
             {
@@ -75,7 +77,7 @@ namespace WebAddressBookTests
 
         public GroupHelper SelectGroup(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index) + "]")).Click();
 
 
             return this;
@@ -122,6 +124,18 @@ namespace WebAddressBookTests
         public bool IsExistGroup(int index)
         {
             return IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + index + "]"));
+        }
+
+        public List<GroupData> GetGroupList()
+        {
+            List<GroupData> groups = new List<GroupData>();
+            manager.Navigator.GoToGroupPage();
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+            foreach (IWebElement element in elements)
+            {
+                groups.Add(new GroupData(element.Text));
+            }
+            return groups;
         }
     }
 }

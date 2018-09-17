@@ -66,7 +66,7 @@ namespace WebAddressBookTests
             {
                 ContactsTests cont = new ContactsTests();
                 cont.AddNewContact();
-                driver.FindElement(By.XPath("//table//tr[" + rowNumber + "]//input")).Click();
+                SelectContact(rowNumber);
             }
             Delete();
             return this;
@@ -150,6 +150,7 @@ namespace WebAddressBookTests
 
         private ContactHelper SelectContact(int rowNumber)
         {
+            rowNumber++;
             driver.FindElement(By.XPath("//table//tr[" + rowNumber + "]//input")).Click();
             return this;
         }
@@ -158,6 +159,23 @@ namespace WebAddressBookTests
         {
             rowNumber++;
             return IsElementPresent(By.XPath("//table//tr[" + rowNumber + "]//input"));
+        }
+
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigator.GoToContactsListPage();
+
+
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name='entry']"));
+            foreach (IWebElement element in elements)
+            {
+                IList<IWebElement> cells = element.FindElements(By.TagName("td"));
+                string name = cells[2].Text;
+                string lastName = cells[1].Text;
+                contacts.Add(new ContactData(name, lastName));
+            }
+            return contacts;
         }
     }
 }

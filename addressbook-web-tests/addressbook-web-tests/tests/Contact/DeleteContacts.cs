@@ -12,13 +12,25 @@ namespace WebAddressBookTests
         [Test]
         public void DeleteContact()
         {
-            app.Contacts.DeleteContact(1);
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
+
+            app.Contacts.DeleteContact(0);
+
+            List<ContactData> newContacts = app.Contacts.GetContactList();
+            if(oldContacts.Count != 0) { oldContacts.RemoveAt(0); }
+            Assert.AreEqual(oldContacts, newContacts);
         }
 
         [Test]
         public void DeleteAllContacts()
         {
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
+
             app.Contacts.DeleteAllContacts();
+
+            List<ContactData> newContacts = app.Contacts.GetContactList();
+            if (oldContacts.Count != 0) { oldContacts.RemoveAt(0); }
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }
