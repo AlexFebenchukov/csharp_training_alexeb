@@ -27,6 +27,7 @@ namespace WebAddressBookTests
             get { return name; }
             set { name = value; }
         }
+
         public string SureName
         {
             get { return sureName; }
@@ -36,20 +37,6 @@ namespace WebAddressBookTests
         {
             get { return lastName; }
             set { lastName = value; }
-        }
-
-
-        public bool Equals(ContactData other)
-        {
-            if (Object.ReferenceEquals(other, null))
-            {
-                return false;
-            }
-            if (Object.ReferenceEquals(this, other))
-            {
-                return true;
-            }
-            return Name == other.Name;
         }
 
         public override int GetHashCode()
@@ -62,14 +49,27 @@ namespace WebAddressBookTests
             return "name=" + Name;
         }
 
+        public bool Equals(ContactData other)
+        {
+            if (Object.ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (Object.ReferenceEquals(this, other))
+            {
+                return true;
+            }
+            return Name == other.Name && LastName == other.LastName;
+        }
+
         public int CompareTo(ContactData other)
         {
-            if (object.ReferenceEquals(other, null))
+            int result = Name.CompareTo(other.Name);
+            if (result == 0)
             {
-                return 1;
+                result = LastName.CompareTo(other.LastName);
             }
-
-            return Name.CompareTo(other.Name);
+            return result;
         }
     }
 }
