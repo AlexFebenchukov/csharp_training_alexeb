@@ -32,16 +32,7 @@ namespace WebAddressBookTests
         {
             index++;
             manager.Navigator.GoToGroupPage();
-            if (IsExistGroup(index))
-            {
-                SelectGroup(index);
-            }
-            else
-            {
-                CreateNewGroups n = new CreateNewGroups();
-                n.CreateNewGroup();
-                SelectGroup(index);
-            }
+            SelectGroup(index);
             InitGroupModification();
             FillGroupForm(newData);
             SubmitGroupModification();
@@ -54,16 +45,8 @@ namespace WebAddressBookTests
         {
             index++;
             manager.Navigator.GoToGroupPage();
-            if (IsExistGroup(index))
-            {
-                SelectGroup(index);
-            }
-            else
-            {
-                CreateNewGroups n = new CreateNewGroups();
-                n.CreateNewGroup();
-                SelectGroup(index);
-            }
+
+            SelectGroup(index);
             RemoveGroup();
             ReturnToGroupsPage();
             return this;
@@ -126,6 +109,7 @@ namespace WebAddressBookTests
 
         public bool IsExistGroup(int index)
         {
+            manager.Navigator.GoToGroupPage();
             return IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + index + "]"));
         }
 

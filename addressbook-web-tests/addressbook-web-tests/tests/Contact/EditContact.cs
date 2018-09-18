@@ -15,10 +15,16 @@ namespace WebAddressBookTests
             ContactData contact = new ContactData("aaBBB");
             contact.SureName = "aaCCCC";
             contact.LastName = "aaDDDD";
+            if (!app.Contacts.IsExistContact(1))
+            {
+                ContactsTests cont = new ContactsTests();
+                cont.AddNewContact();
+            }
 
             List<ContactData> oldContacts = app.Contacts.GetContactList();
 
             app.Contacts.EditContact(1, contact);
+
             oldContacts.RemoveAt(0);
             oldContacts.Add(contact);
             oldContacts.Sort();

@@ -58,19 +58,13 @@ namespace WebAddressBookTests
         {
             rowNumber++;
             manager.Navigator.GoToContactsListPage();
-            if (IsExistContact(rowNumber))
-            {
-                SelectContact(rowNumber);
-            }
-            else
-            {
-                ContactsTests cont = new ContactsTests();
-                cont.AddNewContact();
-                SelectContact(rowNumber);
-            }
+
+            SelectContact(rowNumber);
+
             Delete();
             return this;
         }
+
         public ContactHelper DeleteAllContacts()
         {
             manager.Navigator.GoToContactsListPage();

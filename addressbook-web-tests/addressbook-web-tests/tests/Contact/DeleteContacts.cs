@@ -14,6 +14,12 @@ namespace WebAddressBookTests
         {
             List<ContactData> oldContacts = app.Contacts.GetContactList();
 
+            if (!app.Contacts.IsExistContact(1))
+            {
+                ContactsTests cont = new ContactsTests();
+                cont.AddNewContact();
+            }
+
             app.Contacts.DeleteContact(0);
 
             List<ContactData> newContacts = app.Contacts.GetContactList();
@@ -25,6 +31,12 @@ namespace WebAddressBookTests
         public void DeleteAllContacts()
         {
             List<ContactData> oldContacts = app.Contacts.GetContactList();
+
+            if (!app.Contacts.IsExistContact(1))
+            {
+                ContactsTests cont = new ContactsTests();
+                cont.AddNewContact();
+            }
 
             app.Contacts.DeleteAllContacts();
 
