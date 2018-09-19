@@ -12,9 +12,11 @@ namespace WebAddressBookTests
         [Test]
         public void EditContact()
         {
-            ContactData contact = new ContactData("aaBBB");
-            contact.SureName = "aaCCCC";
-            contact.LastName = "aaDDDD";
+            DateTime localDate = DateTime.Now;
+
+            ContactData contact = new ContactData("aaBBB" + localDate.Millisecond);
+            contact.SureName = "aaCCCC" + localDate.Minute;
+            contact.LastName = "aaDDDD" + localDate.Second;
             if (!app.Contacts.IsExistContact(1))
             {
                 ContactsTests cont = new ContactsTests();

@@ -39,6 +39,7 @@ namespace WebAddressBookTests
         public ContactHelper SubmitContactCreation()
         {
             driver.FindElement(By.CssSelector("input[type=\"submit\"]")).Click();
+            contactCache = null;
             return this;
         }
 
@@ -56,6 +57,7 @@ namespace WebAddressBookTests
 
         public ContactHelper DeleteContact(int rowNumber)
         {
+
             rowNumber++;
             manager.Navigator.GoToContactsListPage();
 
@@ -138,6 +140,7 @@ namespace WebAddressBookTests
         private ContactHelper Delete()
         {
             driver.FindElement(By.CssSelector("input[value ='Delete']")).Click();
+            contactCache = null;
             driver.SwitchTo().Alert().Accept();
             return this;
         }
@@ -155,21 +158,25 @@ namespace WebAddressBookTests
             return IsElementPresent(By.XPath("//table//tr[" + rowNumber + "]//input"));
         }
 
+        private List<ContactData> contactCache = null;
+
         public List<ContactData> GetContactList()
         {
-            List<ContactData> contacts = new List<ContactData>();
-            manager.Navigator.GoToContactsListPage();
-
-
-            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name='entry']"));
-            foreach (IWebElement element in elements)
+            if (contactCache == null)
             {
-                IList<IWebElement> cells = element.FindElements(By.TagName("td"));
-                string name = cells[2].Text;
-                string lastName = cells[1].Text;
-                contacts.Add(new ContactData(name, lastName));
+                contactCache = new List<ContactData>();
+                manager.Navigator.GoToContactsListPage();
+
+                ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name='entry']"));
+                foreach (IWebElement element in elements)
+                {
+                    IList<IWebElement> cells = element.FindElements(By.TagName("td"));
+                    string name = cells[2].Text;
+                    string lastName = cells[1].Text;
+                    contactCache.Add(new ContactData(name, lastName));
+                }
             }
-            return contacts;
+            return new List<ContactData>(contactCache);
         }
     }
 }
