@@ -41,7 +41,7 @@ namespace WebAddressBookTests
         {
             driver.Navigate().GoToUrl(baseURL + "addressbook/edit.php");
         }
-        public void GoToContactsListPage()
+        public void GoToHomePage()
         {
             driver.Navigate().GoToUrl(baseURL + "addressbook/");
         }

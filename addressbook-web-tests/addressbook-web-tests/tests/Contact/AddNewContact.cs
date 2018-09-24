@@ -14,7 +14,7 @@ namespace WebAddressBookTests
         [Test]
         public void AddNewContact()
         {
-            ContactData contact = new ContactData("sas1h544334432a", "SS23431323SS");
+            ContactData contact = new ContactData("sas1h544334432a", "SS23431323SS", "llllasdsadsadsa");
 
             List<ContactData> oldContacts = app.Contacts.GetContactList();
             app.Contacts.CreationNewContact(contact);
